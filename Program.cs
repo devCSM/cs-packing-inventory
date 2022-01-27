@@ -54,6 +54,7 @@ do
             break;
     }
     _pack.ShowPack();
+   
 
     if ((_pack.CurrentItemCount == _pack.MaxItemCount) || (_pack.CurrentVolume == _pack.MaxVolume) || (_pack.CurrentWeight == _pack.MaxWeight))
     {
@@ -98,6 +99,28 @@ public class Pack
 
     ObservableCollection<InventoryItem> inventoryItems = new ObservableCollection<InventoryItem>();
 
+    public override string ToString()
+    {
+        string contents = "";
+
+        if (inventoryItems.Count != 0)
+        {
+            contents += "Pack contaning";
+            foreach (object obj in inventoryItems)
+            {
+                contents += (" " + obj.ToString());
+            }
+        }
+        else
+        {
+            contents += "The pack is empty";
+        }
+
+        contents += ".";
+
+        return contents;
+    }
+
 
     #region CONSTRUCTOR
     public Pack(int maxItemCount, float maxVolume, float maxWeight)
@@ -121,21 +144,23 @@ public class Pack
             CurrentItemCount++;
             CurrentVolume += item.Volume;
             CurrentWeight += item.Weight;
+            inventoryItems.Add(item);
 
             return true;
         }
-        
-        
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine($"Cannot add {item.GetType()}. The pack is too full");
-            Console.ForegroundColor = ConsoleColor.White;
-            return false;
-        
+
+
+        Console.ForegroundColor = ConsoleColor.Red;
+        Console.WriteLine($"Cannot add {item.GetType()}. The pack is too full");
+        Console.ForegroundColor = ConsoleColor.White;
+        return false;
+
     }
 
     public void ShowPack()
     {
         Console.WriteLine("********** Pack Stats **********");
+        Console.WriteLine(this.ToString());
         Console.WriteLine($"Current Item Count: {CurrentItemCount} of {MaxItemCount}.");
         Console.WriteLine($"Current Volume:     {CurrentVolume} of {MaxVolume} max.");
         Console.WriteLine($"Current Weight:     {CurrentWeight} of {MaxWeight} max.");
@@ -165,6 +190,11 @@ public class Arrow : InventoryItem
     {
 
     }
+
+    public override string ToString()
+    {
+        return "Arrow";
+    }
 }
 
 public class Bow : InventoryItem
@@ -172,6 +202,10 @@ public class Bow : InventoryItem
     public Bow() : base(1, 4)
     {
 
+    }
+    public override string ToString()
+    {
+        return "Bow";
     }
 }
 
@@ -181,6 +215,11 @@ public class Rope : InventoryItem
     {
 
     }
+
+    public override string ToString()
+    {
+        return "Rope";
+    }
 }
 
 public class Water : InventoryItem
@@ -188,6 +227,10 @@ public class Water : InventoryItem
     public Water() : base(2, 3)
     {
 
+    }
+    public override string ToString()
+    {
+        return "Water";
     }
 }
 
@@ -197,6 +240,11 @@ public class Food : InventoryItem
     {
 
     }
+
+    public override string ToString()
+    {
+        return "Food";
+    }
 }
 
 public class Sword : InventoryItem
@@ -204,6 +252,11 @@ public class Sword : InventoryItem
     public Sword() : base(5, 3)
     {
 
+    }
+
+    public override string ToString()
+    {
+        return "Sword";
     }
 }
 #endregion
